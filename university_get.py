@@ -15,24 +15,32 @@ def fillUnivList(uList,html):
         if isinstance(tr,bs4.element.Tag):
             tds = tr('td')
             uList.append([tds[0].string,tds[1].string,tds[3].string])
-    return uList
+            
             
 
     
 
 def printUnivList(uList,num):
+    count=0
+    with open('list.txt','w',encoding='utf-8') as f:
         for i in range(num):
             u=uList[i]
             print(u[0],u[1],u[2])
+            for j in range(len(uList[i])):
+                f.write(str(uList[i][j]))
+                count=count+1
+                if count ==3:
+                    count=0
+                    f.write('\n')
+    f.close()
     
 
 def main():
     url = 'http://www.zuihaodaxue.com/Greater_China_Ranking2019_0.html'
     uinfo=[]
     html = getHTMLText(url)
-    newList=fillUnivList(uinfo,html)
-    printUnivList(newList,5)
-    #print(newList)
+    fillUnivList(uinfo,html)
+    printUnivList(uinfo,50)
 
 main()
 
